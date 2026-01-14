@@ -75,7 +75,7 @@ describe('sanitizeSessionHistory', () => {
   it('should NOT downgrade history for non-Google models', async () => {
     vi.mocked(helpers.isGoogleModelApi).mockReturnValue(false);
     
-    const result = await sanitizeSessionHistory({
+    const _result = await sanitizeSessionHistory({
       messages: mockMessages,
       modelApi: 'anthropic-messages',
       provider: 'anthropic',
@@ -90,7 +90,7 @@ describe('sanitizeSessionHistory', () => {
   it('should downgrade history if provider is undefined but model is Google', async () => {
      vi.mocked(helpers.isGoogleModelApi).mockReturnValue(true);
     
-    const result = await sanitizeSessionHistory({
+    const _result = await sanitizeSessionHistory({
       messages: mockMessages,
       modelApi: 'google-gemini',
       provider: undefined,
