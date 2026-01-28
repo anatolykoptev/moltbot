@@ -1,0 +1,27 @@
+{
+  "name": "memos-memory",
+  "version": "1.0.1",
+  "description": "MemOS memory plugin for Moltbot - semantic memory with persistent storage and vector search",
+  "type": "module",
+  "main": "index.js",
+  "keywords": [
+    "moltbot",
+    "plugin",
+    "memory",
+    "memos",
+    "semantic-search",
+    "vector-database"
+  ],
+  "author": "Anatoly Koptev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anatolykoptev/moltbot-memos-memory.git"
+  },
+  "moltbot": {
+    "extensions": ["./index.js"]
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
