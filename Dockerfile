@@ -11,6 +11,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install OpenAI Whisper for local audio transcription
 RUN pip3 install --break-system-packages openai-whisper
 
+# Remove PEP 668 restriction so moltbot can install packages at runtime
+RUN rm -f /usr/lib/python3.*/EXTERNALLY-MANAGED && \
+    pip3 config set global.break-system-packages true
+
 # Install Bun (required for build scripts)
 RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/root/.bun/bin:${PATH}"
