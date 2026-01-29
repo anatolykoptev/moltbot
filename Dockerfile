@@ -1,5 +1,16 @@
 FROM node:22-bookworm
 
+# Install system dependencies (Python for Whisper, ffmpeg for audio processing)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    python3-pip \
+    python3-venv \
+    ffmpeg \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install OpenAI Whisper for local audio transcription
+RUN pip3 install --break-system-packages openai-whisper
+
 # Install Bun (required for build scripts)
 RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/root/.bun/bin:${PATH}"
