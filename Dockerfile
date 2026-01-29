@@ -23,6 +23,17 @@ COPY scripts ./scripts
 
 RUN pnpm install --frozen-lockfile
 
+# Patch pi-ai: fix "Cannot read properties of undefined (reading 'filter')"
+# When model returns content: undefined, the code crashes
+RUN for f in /app/node_modules/@mariozechner/pi-ai/dist/providers/*.js; do \
+      sed -i 's/msg\.content\.filter/((msg.content) || []).filter/g' "$f"; \
+      sed -i 's/msg\.content\.map/((msg.content) || []).map/g' "$f"; \
+      sed -i 's/msg\.content\.some/((msg.content) || []).some/g' "$f"; \
+      sed -i 's/msg\.content\.flatMap/((msg.content) || []).flatMap/g' "$f"; \
+      sed -i 's/assistantMsg\.content\.filter/((assistantMsg.content) || []).filter/g' "$f"; \
+      sed -i 's/assistantMsg\.content\.flatMap/((assistantMsg.content) || []).flatMap/g' "$f"; \
+    done
+
 COPY . .
 RUN CLAWDBOT_A2UI_SKIP_MISSING=1 pnpm build
 # Force pnpm for UI build (Bun may fail on ARM/Synology architectures)
